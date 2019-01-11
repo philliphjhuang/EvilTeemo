@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -13,7 +14,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-public class GamePanel extends JPanel implements ActionListener, KeyListener{
+public class GamePanel extends JPanel implements ActionListener, KeyListener, MouseListener{
 	
 	Timer timer;
 	GameObject GO;
@@ -29,12 +30,26 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 	
 	int currentState = MENU_STATE;
 	
+	Blitzcrank B = new Blitzcrank(800,1500,100,100);
 	
+	Thresh T = new Thresh(800,1000,100,100);
+	
+	ObjectManager OM = new ObjectManager(B,T);
 	
 	void updateMenuState() {
 		
 	}
-
+	
+	void updateGameState() {
+		OM.update();
+		OM.manageEnemies();
+		OM.checkCollisions();
+		OM.purgeObjects();
+		if(B.isAlive==false) {
+			currentState = END_STATE;
+		}
+	}
+	
 	void updateEndState() {
 		
 	}
@@ -60,9 +75,10 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 		
 	}
 	void drawGameState(Graphics g) {
+		g.setColor(Color.GREEN);
+		g.fillRect(0, 0, 9999, 9999);
 		
-		
-		
+		OM.draw(g);
 	}
 	void drawEndState(Graphics g) {
 		g.setColor(Color.RED);
@@ -77,11 +93,27 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 		
 		g.setFont(smallFont);
 		
-		g.drawString("You hooked " + OM.getScore() + " enemies", 138, 350);
+		g.drawString("You hooked " + OM.getScore() + " Threshes", 138, 350);
 		
 		g.drawString("Press ENTER to rerstart",110,500);
 		
 	}
+public GamePanel() {
+		
+		GO = new GameObject(10,10,100,100);
+
+
+	timer = new Timer(1000/60,this);
+	
+	
+	titleFont = new Font("Arial",Font.BOLD,48);
+	smallFont = new Font("Arial",Font.BOLD,24);
+
+}
+
+void startGame() {
+	timer.start();
+}
 
 @Override
 public void actionPerformed(ActionEvent e) {
@@ -141,15 +173,30 @@ public void keyTyped(KeyEvent e) {
 @Override
 public void keyPressed(KeyEvent e) {
 	// TODO Auto-generated method stub
-
+	if(e.getKeyCode()==KeyEvent.VK_ENTER) {
+		if(currentState==END_STATE) {
+		B = new Blitzcrank(250,700,50,50);
+		OM = new ObjectManager(B);
+	}
+		System.out.println(WIDTH+" "+HEIGHT);
+		currentState ++;
+	}
+	if(currentState > END_STATE){
+		
+        currentState = MENU_STATE;
+	}
+		if(e.getKeyCode()==KeyEvent.VK_Q){
+		OM.addHook(new Hook(B.x+20,B.y,10,10));
+		if(currentState==MENU_STATE) {
+			JOptionPane.showMessageDialog(null, "Right click around to move. Press Q to hook. Try not to get hooked.");
+		}
+	}
 
 	}
 @Override
 public void keyReleased(KeyEvent e) {
 	// TODO Auto-generated method stub
-
 	
-}
 
 
 

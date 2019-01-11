@@ -1,58 +1,31 @@
-import java.awt.Dimension;
-
-import javax.swing.JFrame;
-
-public class Blitzcrank {
-
-	
-
-	JFrame frame;
-	final static int WIDTH = 1000; 
-	final int HEIGHT = 1600;
-	GamePanel GP;
-	
-	
-	
-	
-	public static void main(String[] args) {
-		Blitzcrank B = new Blitzcrank();
-		B.setUp();
+import java.awt.Color;
+import java.awt.Graphics;
+public class Blitzcrank extends GameObject{
+	boolean right = false;
+	boolean left = false;
+	int speed;
+	public Blitzcrank(int x, int y, int width, int height) {
+		super(x,y,width,height);
+		// TODO Auto-generated constructor stub
+		speed = 5;
 	}
-	
-void setUp() {
-		
-		frame.add(GP);
-		frame.setSize(WIDTH, HEIGHT);
-		frame.setVisible(true);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setPreferredSize(new Dimension(WIDTH,HEIGHT));
-		frame.pack();
-		GP.startGame();
-		frame.addKeyListener(GP);
-		
-		
+	void update() {
+	super.update();
+	if(right==true) {
+		x+=speed;
 	}
-	
-	
-	
-	
-	
-	
+	if(left==true) {
+		x-=speed;
+	}
+	if(x<=0) {
+		x=0;
+		left=false;
+	} else if(x>=1000) {
+		x=1000;
+		right=false;
+	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	void draw(Graphics g) {
+		
+	}
+}
