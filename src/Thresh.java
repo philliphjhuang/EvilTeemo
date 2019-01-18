@@ -16,8 +16,9 @@ public class Thresh extends GameObject {
 		x=1000;
 		x-=3;
 	}
+	}
 	void draw(Graphics g) {
       	
-	}
+	
 	}
 }

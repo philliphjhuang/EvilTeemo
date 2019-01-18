@@ -7,7 +7,7 @@ public class HookBattle {
 	
 
 	JFrame frame;
-	final static int WIDTH = 1600; 
+	final int WIDTH = 1600; 
 	final int HEIGHT = 1000;
 	GamePanel GP;
 	
