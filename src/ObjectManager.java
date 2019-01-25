@@ -5,19 +5,20 @@ import java.util.Random;
 public class ObjectManager {
 	Blitzcrank B;
 	Thresh T;
+	Teemo teemo;
 	ArrayList<BlitzcrankHook> BH = new ArrayList<BlitzcrankHook>();
 	ArrayList<Thresh> thresh = new ArrayList<Thresh>();
 	ArrayList<ThreshHook> TH = new ArrayList<ThreshHook>();
-	ArrayList<Teemo> Teeto = new ArrayList<Teemo>();
 	long hookTimer = 0;
 	long threshTimer = 0;
 	int threshSpawnTime = 10000;
 	int score = 0;
 	Random a = new Random();
 	int aa = a.nextInt(1);
-	public ObjectManager(Blitzcrank B, Thresh T) {
+	public ObjectManager(Blitzcrank B, Thresh T, Teemo teemo) {
 		this.B=B;
 		this.T=T;
+		this.teemo=teemo;
 	}
 	
 	
@@ -33,9 +34,6 @@ public class ObjectManager {
 		}
 		for(Thresh T: thresh) {
 			T.update();
-		}
-		for(Teemo tee : Teeto) {
-			tee.update();
 		}
 	}
 	
@@ -64,9 +62,6 @@ public class ObjectManager {
 	void addThreshHook(ThreshHook ThreshHookObjects){
 		TH.add(ThreshHookObjects);	
 	}
-	void addTeemo(Teemo TeemoObjects) {
-		Teeto.add(TeemoObjects);
-	}
 	void addThresh(Thresh ThreshObjects) {
 		thresh.add(ThreshObjects);
 	}
@@ -80,13 +75,6 @@ public class ObjectManager {
 			addThresh(new Thresh(800,0,50,50));
 			threshTimer = System.currentTimeMillis();
 		}
-		if(tee.isAlive==false) {
-			if(aa==0) {
-				addTeemo(new Teemo(0,333,50,50));
-			} else if(aa==1) {
-				addTeemo(new Teemo(1000,666,50,50));
-			}
-		}
 	}
 	
 	
@@ -96,14 +84,7 @@ public class ObjectManager {
     			thresh.remove(i);
     		}
     	}
-    	for(int i = 0; i< teeto.size(); i++) {
-    		if(teeto.get(i).isAlive==false) {
-    			teeto.remove(i);
-    		}
-   	
-    
-	
-	
+	}
 	public int getScore() {
 		return score;
 	}
@@ -118,12 +99,15 @@ public class ObjectManager {
 				score++;
 				bh.isAlive=false;
 				T.isAlive=false;
-			} else if(bh.collisionBox.intersects(tee.)) {
-				
+			} else if(bh.collisionBox.intersects(teemo.collisionBox)) {
+				score--;
 			}
-		
+		}	
+		for(ThreshHook th:TH) {
+			if(th.collisionBox.intersects(B.collisionBox)) {
+				B.isAlive = false;
+			}
 		}
-			
 	}
 	
 	

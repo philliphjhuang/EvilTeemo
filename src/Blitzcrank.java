@@ -11,21 +11,9 @@ public class Blitzcrank extends GameObject{
 	}
 	void update() {
 	super.update();
-	if(right==true) {
-		x+=speed;
+	
 	}
-	if(left==true) {
-		x-=speed;
-	}
-	if(x<=0) {
-		x=0;
-		left=false;
-	} else if(x>=1000) {
-		x=1000;
-		right=false;
-	}
-}
 	void draw(Graphics g) {
-		
+		g.drawImage(GamePanel.blitzcrankImg,x,y,width,height,null);
 	}
 }

@@ -5,7 +5,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -14,7 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-public class GamePanel extends JPanel implements ActionListener, KeyListener, MouseListener{
+public class GamePanel extends JPanel implements ActionListener, KeyListener, MouseListener, MouseMotionListener{
 	
 	Timer timer;
 	GameObject GO;
@@ -30,11 +32,23 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 	
 	int currentState = MENU_STATE;
 	
-	Blitzcrank B = new Blitzcrank(800,1500,100,100);
+	Blitzcrank B = new Blitzcrank(750,800,150,150);
 	
-	Thresh T = new Thresh(800,1000,100,100);
+	Thresh T = new Thresh(750,100,75,75);
 	
-	ObjectManager OM = new ObjectManager(B,T);
+	Teemo teemo = new Teemo(0, 500,75,75);
+	
+	ObjectManager OM = new ObjectManager(B,T,teemo);
+	
+	int mouseX ;
+	
+	int mouseY ;
+	
+	public static BufferedImage blitzcrankImg;
+	
+	
+	
+	
 	
 	void updateMenuState() {
 		
@@ -43,7 +57,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 	void updateGameState() {
 		OM.update();
 		OM.manageEnemies();
-		OM.checkCollisions();
+		OM.checkCollision();
 		OM.purgeObjects();
 		if(B.isAlive==false) {
 			currentState = END_STATE;
@@ -78,7 +92,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 		g.setColor(Color.GREEN);
 		g.fillRect(0, 0, 9999, 9999);
 		
-		OM.draw(g);
+		OM.drawBlitzcrankHook(g);
+		OM.drawThreshHook(g);
+		
 	}
 	void drawEndState(Graphics g) {
 		g.setColor(Color.RED);
@@ -108,7 +124,20 @@ public GamePanel() {
 	
 	titleFont = new Font("Arial",Font.BOLD,48);
 	smallFont = new Font("Arial",Font.BOLD,24);
-
+	
+	try {
+		blitzcrankImg = ImageIO.read(this.getClass().getResourceAsStream("blitzcrank.png"));
+		
+	
+		
+		
+	} catch (IOException e) {
+		
+		//TODO Auto-generated catch block
+		
+		e.printStackTrace();
+		
+	}
 }
 
 void startGame() {
@@ -136,12 +165,6 @@ if(currentState == MENU_STATE){
 
 }
 
-
-	
-	
-	
-	
-	
 }
 @Override
 
@@ -175,8 +198,8 @@ public void keyPressed(KeyEvent e) {
 	// TODO Auto-generated method stub
 	if(e.getKeyCode()==KeyEvent.VK_ENTER) {
 		if(currentState==END_STATE) {
-		B = new Blitzcrank(250,700,50,50);
-		OM = new ObjectManager(B);
+		B = new Blitzcrank(B.x,B.y,75,75);
+		OM = new ObjectManager(B,T,teemo);
 	}
 		System.out.println(WIDTH+" "+HEIGHT);
 		currentState ++;
@@ -186,9 +209,9 @@ public void keyPressed(KeyEvent e) {
         currentState = MENU_STATE;
 	}
 		if(e.getKeyCode()==KeyEvent.VK_Q){
-		OM.addHook(new Hook(B.x+20,B.y,10,10));
+		OM.addBlitzcrankHook(new BlitzcrankHook(mouseX, mouseY,100,100));
 		if(currentState==MENU_STATE) {
-			JOptionPane.showMessageDialog(null, "Right click around to move. Press Q to hook. Try not to get hooked.");
+			JOptionPane.showMessageDialog(null, "Right click to move around. Press Q to hook. Try not to get hooked.");
 		}
 	}
 
@@ -197,11 +220,58 @@ public void keyPressed(KeyEvent e) {
 public void keyReleased(KeyEvent e) {
 	// TODO Auto-generated method stub
 	
+}
 
-
-
-
+@Override
+public void mouseClicked(MouseEvent e) {
+	// TODO Auto-generated method stub
 	
+System.out.println("x: " + e.getX());
+System.out.println("y: " + e.getY());
+	if(e.getY() <=700) {
+		B.y=700;
+	} else {
+		B.y = e.getY();
+	}
+	B.x = e.getX();
+
+
+}
+
+@Override
+public void mousePressed(MouseEvent e) {
+	// TODO Auto-generated method stub
 	
+}
+
+@Override
+public void mouseReleased(MouseEvent e) {
+	// TODO Auto-generated method stub
 	
+}
+
+@Override
+public void mouseEntered(MouseEvent e) {
+	// TODO Auto-generated method stub
+	
+}
+
+@Override
+public void mouseExited(MouseEvent e) {
+	// TODO Auto-generated method stub
+	
+}
+
+@Override
+public void mouseDragged(MouseEvent e) {
+	// TODO Auto-generated method stub
+	
+}
+
+@Override
+public void mouseMoved(MouseEvent e) {
+	// TODO Auto-generated method stub
+	mouseX = e.getX();
+	mouseY = e.getY();
+}
 }
