@@ -45,7 +45,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 	int mouseY;
 
 	public static BufferedImage blitzcrankImg;
-
+	public static BufferedImage blitzcrankHookImg;
+	
 	void updateMenuState() {
 
 	}
@@ -87,9 +88,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 		g.setColor(Color.GREEN);
 		g.fillRect(0, 0, 9999, 9999);
 
-		OM.drawBlitzcrankHook(g);
-		OM.drawThreshHook(g);
-
+		OM.draw(g);
 	}
 
 	void drawEndState(Graphics g) {
@@ -121,7 +120,10 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 		smallFont = new Font("Arial", Font.BOLD, 24);
 
 		try {
+			
 			blitzcrankImg = ImageIO.read(this.getClass().getResourceAsStream("blitzcrank.png"));
+			
+			blitzcrankHookImg = ImageIO.read(this.getClass().getResourceAsStream("blitzcrankHook.png"));
 
 		} catch (IOException e) {
 
@@ -197,7 +199,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 		// TODO Auto-generated method stub
 		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 			if (currentState == END_STATE) {
-				B = new Blitzcrank(B.x, B.y, 75, 75);
+				B = new Blitzcrank(750, 800, 150, 150);
 				OM = new ObjectManager(B, T, teemo);
 			}
 			System.out.println(WIDTH + " " + HEIGHT);
@@ -208,10 +210,11 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 			currentState = MENU_STATE;
 		}
 		if (e.getKeyCode() == KeyEvent.VK_Q) {
-			OM.addBlitzcrankHook(new BlitzcrankHook(mouseX, mouseY, 100, 100));
+			if(currentState == GAME_STATE) {
+			OM.addBlitzcrankHook(new BlitzcrankHook(B.x-70, B.y-100, 100, 100, mouseX, mouseY));
+			}
 			if (currentState == MENU_STATE) {
-				JOptionPane.showMessageDialog(null,
-						"Click to move around. Press Q to hook. Try not to get hooked.");
+				JOptionPane.showMessageDialog(null,"Click to move around. Press Q to hook. Try not to get hooked.");
 			}
 		}
 

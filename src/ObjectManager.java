@@ -37,21 +37,19 @@ public class ObjectManager {
 		}
 	}
 	
-	
-		void drawBlitzcrankHook(Graphics g) {
-		B.draw(g);
-		
-		for(BlitzcrankHook bh: BH) {
+		void draw(Graphics g) {
 			B.draw(g);
-		}
-		
-	}
-		void drawThreshHook(Graphics g) {
-			T.draw(g);
-			for(ThreshHook th: TH) {
-				T.draw(g);
+			for(BlitzcrankHook bh: BH) {
+				bh.draw(g);
+			}
+			for(Thresh th:thresh) {
+				th.draw(g);
+			}
+			for(ThreshHook th:TH) {
+				th.draw(g);
 			}
 		}
+	
 		
 		
 		
