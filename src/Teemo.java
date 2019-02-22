@@ -7,21 +7,21 @@ public class Teemo extends GameObject {
 	public Teemo(int x, int y, int width, int height) {
 		super(x, y, width, height);
 		// TODO Auto-generated constructor stub
-		speed = 10;
+		speed = 3;
 	}
 
 
 	void update() {
-		Random r = new Random();
-		int q = r.nextInt(1);
-		if(q==0) {
-			x++;
-		} else if(q==1) {
-			x--;
+		x+=speed;
+		if(x==1500) {
+			speed=-speed;
+		} 
+		if(x==0) {
+			speed=3;
 		}
 	}
 	void draw(Graphics g){
-        
+		g.drawImage(GamePanel.blitzcrankImg,x-70,y-100,width,height,null);
 
 		
 	}

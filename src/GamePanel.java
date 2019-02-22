@@ -44,8 +44,12 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 
 	int mouseY;
 
+	boolean canHook; 
+	
 	public static BufferedImage blitzcrankImg;
 	public static BufferedImage blitzcrankHookImg;
+	public static BufferedImage threshImg;
+	public static BufferedImage teemoImg;
 	
 	void updateMenuState() {
 
@@ -125,21 +129,17 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 			
 			blitzcrankHookImg = ImageIO.read(this.getClass().getResourceAsStream("blitzcrankHook.png"));
 
+			threshImg = ImageIO.read(this.getClass().getResourceAsStream("thresh.png"));
+			
+			teemoImg = ImageIO.read(this.getClass().getResourceAsStream("teemo.png"));
+			
 		} catch (IOException e) {
 
 			// TODO Auto-generated catch block
 
 			e.printStackTrace();
-
 		}
-		
-		
-		
 	}
-	
-	
-	
-	
 	void startGame() {
 		timer.start();
 	}
@@ -185,9 +185,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 			drawEndState(g);
 
 		}
-
 	}
-
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
@@ -200,6 +198,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 			if (currentState == END_STATE) {
 				B = new Blitzcrank(750, 800, 150, 150);
+				T = new Thresh(750, 100, 75, 75);
+				teemo = new Teemo(0, 500, 75, 75);
 				OM = new ObjectManager(B, T, teemo);
 			}
 			System.out.println(WIDTH + " " + HEIGHT);
@@ -211,20 +211,15 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 		}
 		if (e.getKeyCode() == KeyEvent.VK_Q) {
 			if(currentState == GAME_STATE) {
+				if(canHook==true) {
 			OM.addBlitzcrankHook(new BlitzcrankHook(B.x-70, B.y-100, 100, 100, mouseX, mouseY));
+			}
 			}
 			if (currentState == MENU_STATE) {
 				JOptionPane.showMessageDialog(null,"Click to move around. Press Q to hook. Try not to get hooked.");
 			}
 		}
-
 	}
-	
-	
-	
-	
-	
-
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub

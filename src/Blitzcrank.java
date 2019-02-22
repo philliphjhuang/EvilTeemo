@@ -6,6 +6,7 @@ public class Blitzcrank extends GameObject{
 	int mouseX ;
 	int mouseY ;
 	int speed = 3;
+	boolean canHook;
 	public Blitzcrank(int x, int y, int width, int height) {
 		super(x,y,width,height);
 		// TODO Auto-generated constructor stub
@@ -19,6 +20,10 @@ public class Blitzcrank extends GameObject{
 	
 	void update() {
 	super.update();
+	
+	if(y<800) {
+		y=800;
+	}
 	
 	if (x < mouseX) {
 		x += speed;

@@ -9,7 +9,7 @@ public class ObjectManager {
 	ArrayList<BlitzcrankHook> BH = new ArrayList<BlitzcrankHook>();
 	ArrayList<Thresh> thresh = new ArrayList<Thresh>();
 	ArrayList<ThreshHook> TH = new ArrayList<ThreshHook>();
-	long hookTimer = 0;
+	long hookTimer = 10000;
 	long threshTimer = 0;
 	int threshSpawnTime = 10000;
 	int score = 0;
@@ -65,6 +65,11 @@ public class ObjectManager {
 	}
 	
 	
+	public void manageHooks() {
+		if((System.currentTimeMillis() - hookTimer >= 0 )&&(B.canHook==true)) {
+			
+		}
+	}
 	
 	
 	
