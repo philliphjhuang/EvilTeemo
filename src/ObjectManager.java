@@ -9,115 +9,117 @@ public class ObjectManager {
 	ArrayList<BlitzcrankHook> BH = new ArrayList<BlitzcrankHook>();
 	ArrayList<Thresh> thresh = new ArrayList<Thresh>();
 	ArrayList<ThreshHook> TH = new ArrayList<ThreshHook>();
-	long hookTimer = 10000;
+	long hookTimer = 13000;
 	long threshTimer = 0;
 	int threshSpawnTime = 10000;
 	int score = 0;
 	Random a = new Random();
 	int aa = a.nextInt(1);
+
 	public ObjectManager(Blitzcrank B, Thresh T, Teemo teemo) {
-		this.B=B;
-		this.T=T;
-		this.teemo=teemo;
+		this.B = B;
+		this.T = T;
+		this.teemo = teemo;
 	}
-	
-	
-	
+
 	void update() {
 		B.update();
 		T.update();
-		for(BlitzcrankHook bh: BH){
+		teemo.update();
+		for (BlitzcrankHook bh : BH) {
 			bh.update();
 		}
-		for(ThreshHook th: TH){
+		for (ThreshHook th : TH) {
 			th.update();
 		}
-		for(Thresh T: thresh) {
+		for (Thresh T : thresh) {
 			T.update();
 		}
 	}
-	
-		void draw(Graphics g) {
-			B.draw(g);
-			for(BlitzcrankHook bh: BH) {
-				bh.draw(g);
-			}
-			for(Thresh th:thresh) {
-				th.draw(g);
-			}
-			for(ThreshHook th:TH) {
-				th.draw(g);
-			}
+
+	void draw(Graphics g) {
+		B.draw(g);
+		for (BlitzcrankHook bh : BH) {
+			bh.draw(g);
 		}
-	
-		
-		
-		
-		
-	void addBlitzcrankHook(BlitzcrankHook BlitzcrankHookObjects){
+		for (Thresh th : thresh) {
+			th.draw(g);
+		}
+		for (ThreshHook th : TH) {
+			th.draw(g);
+		}
+		T.draw(g);
+		teemo.draw(g);
+	}
+
+	void addBlitzcrankHook(BlitzcrankHook BlitzcrankHookObjects) {
 		BH.add(BlitzcrankHookObjects);
 	}
-	void addThreshHook(ThreshHook ThreshHookObjects){
-		TH.add(ThreshHookObjects);	
+
+	void addThreshHook(ThreshHook ThreshHookObjects) {
+		TH.add(ThreshHookObjects);
 	}
+
 	void addThresh(Thresh ThreshObjects) {
 		thresh.add(ThreshObjects);
 	}
-	
-	
-	public void manageHooks() {
-		if((System.currentTimeMillis() - hookTimer >= 0 )&&(B.canHook==true)) {
-			
+
+	public void manageHook() {
+		if ((System.currentTimeMillis() >= hookTimer)) {
+			B.canHook = true;
+		}
+		if ((System.currentTimeMillis() >= hookTimer)) {
+			T.canHook = true;
+			addThreshHook(new ThreshHook(T.x, T.y, 100, 100));
 		}
 	}
-	
-	
-	
+
 	public void manageEnemies() {
-		if((System.currentTimeMillis() - threshTimer >= threshSpawnTime)&& (T.isAlive==false)) {
-			addThresh(new Thresh(800,0,50,50));
+		if ((System.currentTimeMillis() - threshTimer >= threshSpawnTime) && (T.isAlive == false)) {
+			addThresh(new Thresh(750, 100, 200, 200));
 			threshTimer = System.currentTimeMillis();
 		}
 	}
-	
-	
+
 	void purgeObjects() {
-    	for(int i = 0; i < thresh.size(); i++) {
-    		if(thresh.get(i).isAlive==false) {
-    			thresh.remove(i);
-    		}
-    	}
-	}
-	public int getScore() {
-		return score;
-	}
-	
-	
-	
-	
-	
-	void checkCollision() {
-		for(BlitzcrankHook bh:BH) {
-			if(bh.collisionBox.intersects(T.collisionBox)) {
-				score++;
-				bh.isAlive=false;
-				T.isAlive=false;
-			} else if(bh.collisionBox.intersects(teemo.collisionBox)) {
-				score--;
+		for (int i = 0; i < thresh.size(); i++) {
+			if (thresh.get(i).isAlive == false) {
+				thresh.remove(i);
 			}
-		}	
-		for(ThreshHook th:TH) {
-			if(th.collisionBox.intersects(B.collisionBox)) {
-				B.isAlive = false;
+		}
+		for (int i = 0; i < TH.size(); i++) {
+			if (TH.get(i).isAlive == false) {
+				TH.remove(i);
+				T.canHook = false;
+			}
+		}
+		for (int i = 0; i < BH.size(); i++) {
+			if (BH.get(i).isAlive == false) {
+				BH.remove(i);
 			}
 		}
 	}
-	
-	
-	
-	
-	
-	
-	
-	
+
+	public int getScore() {
+		return score;
+	}
+
+	void checkCollision() {
+		for (BlitzcrankHook bh : BH) {
+			if (bh.collisionBox.intersects(T.collisionBox)) {
+				score++;
+				bh.isAlive = false;
+				T.isAlive = false;
+			} else if (bh.collisionBox.intersects(teemo.collisionBox)) {
+				score--;
+				bh.isAlive = false;
+			}
+		}
+		for (ThreshHook th : TH) {
+			if (th.collisionBox.intersects(B.collisionBox)) {
+				B.isAlive = false;
+
+			}
+		}
+	}
 }

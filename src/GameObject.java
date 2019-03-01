@@ -6,8 +6,10 @@ public class GameObject {
 	int y;
 	int width;
 	int height;
-	boolean isAlive=true;
+	boolean isAlive = true;
 	Rectangle collisionBox;
+	boolean canHook = true;
+	boolean isLaunching = false;
 	public GameObject(int x, int y, int width, int height) {
 		this.x=x;
 		this.y=y;

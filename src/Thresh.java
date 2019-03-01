@@ -7,8 +7,8 @@ public class Thresh extends GameObject {
 	public Thresh(int x, int y, int width, int height) {
 		super(x,y,width,height);
 		// TODO Auto-generated constructor stub
-		Xspeed = 3;
-		Yspeed = 3;
+		Xspeed = 6;
+		Yspeed = 6;
 	}
 	void update() {
 	super.update();
@@ -19,13 +19,13 @@ public class Thresh extends GameObject {
 		Xspeed=-Xspeed;
 	} 
 	if(x==0) {
-		Xspeed=3;
+		Xspeed=6;
 	}
-	if(y>400) {
+	if(y>300) {
 		Yspeed=-Yspeed;
 	}
-	if(y==0) {
-		Yspeed=3;
+	if(y==10) {
+		Yspeed=6;
 	}
 	
 	

@@ -12,18 +12,18 @@ public class Teemo extends GameObject {
 
 
 	void update() {
+		super.update();
 		x+=speed;
 		if(x==1500) {
-			speed=-speed;
+		speed=-speed;
 		} 
 		if(x==0) {
-			speed=3;
+		speed=3;
 		}
+		
 	}
 	void draw(Graphics g){
-		g.drawImage(GamePanel.blitzcrankImg,x-70,y-100,width,height,null);
-
-		
+		g.drawImage(GamePanel.teemoImg,x-70,y-100,width,height,null);
 	}
 	
 	

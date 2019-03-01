@@ -1,3 +1,4 @@
+/.DS_Store
 /Blitzcrank.class
 /BlitzcrankHook.class
 /GameObject.class
@@ -9,7 +10,8 @@
 /ThreshHook.class
 /blitzcrank.png
 /blitzcrankHook.png
-/thresh.jpg
-/thresh.png
-/.DS_Store
 /teemo.png
+/thresh.png
+/map.png
+/threshHook.jpg
+/threshHook.png
