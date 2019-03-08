@@ -109,7 +109,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 
 		g.setFont(smallFont);
 
-		g.drawString("You hooked " + OM.getScore() + " Thresh(es)", 138, 350);
+		g.drawString("You got " + OM.getScore() + " point(s)", 138, 350);
 
 		g.drawString("Press ENTER to rerstart", 110, 500);
 
@@ -219,15 +219,18 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 		if ((e.getKeyCode() == KeyEvent.VK_Q) && (B.canHook==true)) {
 			if (currentState == GAME_STATE) {
 				OM.addBlitzcrankHook(new BlitzcrankHook(B.x - 70, B.y - 100, 100, 100, mouseX, mouseY));
+				
+				/*
 				B.canHook=false;
+				*/
 				if(B.isLaunching==true) {
-					B.speed=0;
+				B.speed=0;
 				} else {
 					B.speed = 3;
 				}
 			}
 		}
-		if (currentState == MENU_STATE) {
+		if (e.getKeyCode()==KeyEvent.VK_SPACE &&currentState == MENU_STATE) {
 			JOptionPane.showMessageDialog(null, "Click to move around. Press Q to hook. Don't hook Teemo. Try not to get hooked. Your hook has a 13 seconds cooldown, use it wisely.");
 		}
 	}

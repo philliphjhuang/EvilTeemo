@@ -9,9 +9,7 @@ public class ObjectManager {
 	ArrayList<BlitzcrankHook> BH = new ArrayList<BlitzcrankHook>();
 	ArrayList<Thresh> thresh = new ArrayList<Thresh>();
 	ArrayList<ThreshHook> TH = new ArrayList<ThreshHook>();
-	long hookTimer = 13000;
-	long threshTimer = 0;
-	int threshSpawnTime = 10000;
+	long timer = 10000;
 	int score = 0;
 	Random a = new Random();
 	int aa = a.nextInt(1);
@@ -63,27 +61,27 @@ public class ObjectManager {
 	void addThresh(Thresh ThreshObjects) {
 		thresh.add(ThreshObjects);
 	}
-
+/*
 	public void manageHook() {
-		if ((System.currentTimeMillis() >= hookTimer)) {
+		if ((System.currentTimeMillis() >= timer)) {
 			B.canHook = true;
 		}
-		if ((System.currentTimeMillis() >= hookTimer)) {
+		if ((System.currentTimeMillis() >= timer)) {
 			T.canHook = true;
 			addThreshHook(new ThreshHook(T.x, T.y, 100, 100));
 		}
 	}
-
+*/
 	public void manageEnemies() {
-		if ((System.currentTimeMillis() - threshTimer >= threshSpawnTime) && (T.isAlive == false)) {
-			addThresh(new Thresh(750, 100, 200, 200));
-			threshTimer = System.currentTimeMillis();
+		if ((System.currentTimeMillis() > timer) && (T.isAlive == false)) {
+			addThresh(new Thresh(750, 100, 150, 150));
+			timer = System.currentTimeMillis();
 		}
 	}
 
 	void purgeObjects() {
 		for (int i = 0; i < thresh.size(); i++) {
-			if (thresh.get(i).isAlive == false) {
+			if (T.isAlive==false) {
 				thresh.remove(i);
 			}
 		}

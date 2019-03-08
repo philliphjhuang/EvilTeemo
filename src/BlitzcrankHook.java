@@ -10,28 +10,35 @@ public class BlitzcrankHook extends GameObject {
 	double Yvelocity;
 	boolean isLaunching = false;
 	
+	
+	
+	public void mousePosition(int mouseX, int mouseY) {
+		this.mouseX=mouseX;
+		this.mouseY=mouseY;
+	}
+	
+	
 	public BlitzcrankHook(int x, int y, int width, int height, int mouseX, int mouseY) {
 
 		super(x, y, width, height);
-		this.mouseX = mouseX;
-		this.mouseY = mouseY;
 		int Xdif = x - mouseX;
 		int Ydif = y - mouseY;
-
 		this.isLaunching = true;
 		isLaunching = true;
 
 		velocity = 7;
+		
+		
 		if (Xdif != 0) {
-			angle = Math.atan((double) Ydif / (double) Xdif);
+			angle = Math.atan((double)Ydif/(double)Xdif);
 		} else {
 			angle = 0;
 
 		}
 
-		if (x > 0) {
-			Xvelocity = Math.cos(angle) * velocity;
-			Yvelocity = Math.sin(angle) * velocity;
+		if(x>0) {
+			Xvelocity = Math.cos(angle);
+			Yvelocity = Math.sin(angle);
 		}
 
 		// TODO Auto-generated constructor stub
@@ -51,7 +58,7 @@ public class BlitzcrankHook extends GameObject {
 
 	void draw(Graphics g) {
 
-		g.drawImage(GamePanel.blitzcrankHookImg, x, y, width, height, null);
+		g.drawImage(GamePanel.blitzcrankHookImg, x, y+30, width, height, null);
 
 	}
 }

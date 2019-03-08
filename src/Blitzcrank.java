@@ -4,6 +4,7 @@ public class Blitzcrank extends GameObject{
 	int mouseX ;
 	int mouseY ;
 	int speed = 3;
+	boolean isLaunching;
 	public Blitzcrank(int x, int y, int width, int height) {
 		super(x,y,width,height);
 		// TODO Auto-generated constructor stub
