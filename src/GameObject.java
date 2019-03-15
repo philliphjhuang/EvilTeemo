@@ -8,14 +8,14 @@ public class GameObject {
 	int height;
 	boolean isAlive = true;
 	Rectangle collisionBox;
-	boolean canHook = true;
-	boolean isLaunching = false;
+
+
 	public GameObject(int x, int y, int width, int height) {
 		this.x=x;
 		this.y=y;
 		this.width=width;
 		this.height=height;
-		collisionBox=new Rectangle();
+		collisionBox = new Rectangle(100, 100);
 	}
 	void update() {
 		collisionBox.setBounds(x, y, width, height);

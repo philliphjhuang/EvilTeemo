@@ -9,12 +9,10 @@ public class ObjectManager {
 	ArrayList<BlitzcrankHook> BH = new ArrayList<BlitzcrankHook>();
 	ArrayList<Thresh> thresh = new ArrayList<Thresh>();
 	ArrayList<ThreshHook> TH = new ArrayList<ThreshHook>();
-	long timer = 10000;
+	long timer = 0;
+	int spawnTime=1500;
 	int score = 0;
-	Random a = new Random();
-	int aa = a.nextInt(1);
-
-	public ObjectManager(Blitzcrank B, Thresh T, Teemo teemo) {
+		public ObjectManager(Blitzcrank B, Thresh T, Teemo teemo) {
 		this.B = B;
 		this.T = T;
 		this.teemo = teemo;
@@ -61,17 +59,16 @@ public class ObjectManager {
 	void addThresh(Thresh ThreshObjects) {
 		thresh.add(ThreshObjects);
 	}
-/*
+
 	public void manageHook() {
-		if ((System.currentTimeMillis() >= timer)) {
-			B.canHook = true;
-		}
-		if ((System.currentTimeMillis() >= timer)) {
-			T.canHook = true;
-			addThreshHook(new ThreshHook(T.x, T.y, 100, 100));
+		if ((System.currentTimeMillis() - timer >=spawnTime)) {
+				addBlitzcrankHook(new BlitzcrankHook(teemo.x,teemo.y,100,100));
+				timer = System.currentTimeMillis();
 		}
 	}
-*/
+
+	
+	
 	public void manageEnemies() {
 		if ((System.currentTimeMillis() > timer) && (T.isAlive == false)) {
 			addThresh(new Thresh(750, 100, 150, 150));
@@ -84,20 +81,24 @@ public class ObjectManager {
 			if (T.isAlive==false) {
 				thresh.remove(i);
 			}
+			for (int q = 0; q < BH.size(); q++) {
+				if (BH.get(q).isAlive == false) {
+					BH.remove(q);
+				}
+			}
 		}
+	}
+		/*
 		for (int i = 0; i < TH.size(); i++) {
 			if (TH.get(i).isAlive == false) {
 				TH.remove(i);
 				T.canHook = false;
 			}
 		}
-		for (int i = 0; i < BH.size(); i++) {
-			if (BH.get(i).isAlive == false) {
-				BH.remove(i);
-			}
-		}
-	}
+		*/
+		
 
+		
 	public int getScore() {
 		return score;
 	}
@@ -108,9 +109,14 @@ public class ObjectManager {
 				score++;
 				bh.isAlive = false;
 				T.isAlive = false;
-			} else if (bh.collisionBox.intersects(teemo.collisionBox)) {
-				score--;
+				
+			} else if(bh.collisionBox.intersects(B.collisionBox)) {
+				B.isAlive=false;
+			}
+			
+			/* else if (bh.collisionBox.intersects(teemo.collisionBox)) {
 				bh.isAlive = false;
+				B.isAlive=false;
 			}
 		}
 		for (ThreshHook th : TH) {
@@ -118,6 +124,8 @@ public class ObjectManager {
 				B.isAlive = false;
 
 			}
+		}
+		*/
 		}
 	}
 }

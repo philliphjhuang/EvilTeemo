@@ -1,64 +1,50 @@
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.Random;
 
 public class BlitzcrankHook extends GameObject {
-	double velocity;
-	double angle;
-	int mouseX;
-	int mouseY;
-	double Xvelocity;
-	double Yvelocity;
-	boolean isLaunching = false;
+	int Xspeed;
+	int Yspeed;
+	int speed;
 	
-	
-	
-	public void mousePosition(int mouseX, int mouseY) {
-		this.mouseX=mouseX;
-		this.mouseY=mouseY;
-	}
-	
-	
-	public BlitzcrankHook(int x, int y, int width, int height, int mouseX, int mouseY) {
-
+	public BlitzcrankHook(int x, int y, int width, int height) {
 		super(x, y, width, height);
-		int Xdif = x - mouseX;
-		int Ydif = y - mouseY;
-		this.isLaunching = true;
-		isLaunching = true;
-
-		velocity = 7;
+		speed = 8;
 		
-		
-		if (Xdif != 0) {
-			angle = Math.atan((double)Ydif/(double)Xdif);
-		} else {
-			angle = 0;
-
-		}
-
-		if(x>0) {
-			Xvelocity = Math.cos(angle);
-			Yvelocity = Math.sin(angle);
-		}
-
 		// TODO Auto-generated constructor stub
 	}
-
-	public void update() {
-		if (isLaunching == true) {
-			x += Xvelocity;
-			y -= Yvelocity;
-		}
+		public void update() {
+			
+			
 		super.update();
-		if (y < 0) {
-			isAlive = false;
+		if(new Random().nextInt(1)==1) {
+			x+=Xspeed;
+		} else {
+			x-=Xspeed;
 		}
-
+		if(new Random().nextInt(1)==1) {
+			y+=Yspeed;
+		} else {
+			y-=Yspeed;
+		}
+	
+		if (y < 0) {
+		Yspeed=-Yspeed;
+		} 
+		if(y>1000) {
+		Yspeed = -Yspeed;
+		}
+		if(x<0) {
+		Xspeed = -Xspeed;
+		}
+		if(x>1500) {
+		Xspeed = -Xspeed;
+		}
 	}
 
 	void draw(Graphics g) {
 
-		g.drawImage(GamePanel.blitzcrankHookImg, x, y+30, width, height, null);
+		g.drawImage(GamePanel.dartImg, x-50, y, width, height, null);
 
 	}
 }
