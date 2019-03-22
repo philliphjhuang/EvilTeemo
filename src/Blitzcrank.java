@@ -20,9 +20,6 @@ public class Blitzcrank extends GameObject{
 	super.update();
 
 	
-	if(y<750) {
-		y=750;
-	}
 	if (x < mouseX) {
 		x += speed;
 	}

@@ -9,9 +9,11 @@ public class ObjectManager {
 	ArrayList<BlitzcrankHook> BH = new ArrayList<BlitzcrankHook>();
 	ArrayList<Thresh> thresh = new ArrayList<Thresh>();
 	ArrayList<ThreshHook> TH = new ArrayList<ThreshHook>();
-	long timer = 0;
-	int spawnTime=1500;
+	long startTime = System.currentTimeMillis();
+	long currentTime = (System.currentTimeMillis()-startTime)/1000;
+	long timer = 0L;
 	int score = 0;
+	
 		public ObjectManager(Blitzcrank B, Thresh T, Teemo teemo) {
 		this.B = B;
 		this.T = T;
@@ -25,9 +27,6 @@ public class ObjectManager {
 		for (BlitzcrankHook bh : BH) {
 			bh.update();
 		}
-		for (ThreshHook th : TH) {
-			th.update();
-		}
 		for (Thresh T : thresh) {
 			T.update();
 		}
@@ -35,56 +34,33 @@ public class ObjectManager {
 
 	void draw(Graphics g) {
 		B.draw(g);
+		T.draw(g);
+		teemo.draw(g);
 		for (BlitzcrankHook bh : BH) {
 			bh.draw(g);
 		}
 		for (Thresh th : thresh) {
 			th.draw(g);
 		}
-		for (ThreshHook th : TH) {
-			th.draw(g);
-		}
-		T.draw(g);
-		teemo.draw(g);
 	}
 
-	void addBlitzcrankHook(BlitzcrankHook BlitzcrankHookObjects) {
-		BH.add(BlitzcrankHookObjects);
+	void addBlitzcrankHook(BlitzcrankHook blitzcrankHookObjects) {
+		BH.add(blitzcrankHookObjects);
 	}
-
-	void addThreshHook(ThreshHook ThreshHookObjects) {
-		TH.add(ThreshHookObjects);
-	}
-
 	void addThresh(Thresh ThreshObjects) {
 		thresh.add(ThreshObjects);
 	}
 
 	public void manageHook() {
-		if ((System.currentTimeMillis() - timer >=spawnTime)) {
-				addBlitzcrankHook(new BlitzcrankHook(teemo.x,teemo.y,100,100));
-				timer = System.currentTimeMillis();
-		}
-	}
-
-	
-	
-	public void manageEnemies() {
-		if ((System.currentTimeMillis() > timer) && (T.isAlive == false)) {
-			addThresh(new Thresh(750, 100, 150, 150));
+		if (System.currentTimeMillis() - timer >= 2000) {
 			timer = System.currentTimeMillis();
+			addBlitzcrankHook(new BlitzcrankHook(teemo.x,teemo.y,100,100));
 		}
 	}
-
 	void purgeObjects() {
-		for (int i = 0; i < thresh.size(); i++) {
-			if (T.isAlive==false) {
-				thresh.remove(i);
-			}
-			for (int q = 0; q < BH.size(); q++) {
-				if (BH.get(q).isAlive == false) {
-					BH.remove(q);
-				}
+		for (int i = 0; i < BH.size(); i++) {
+			if (BH.get(i).isAlive == false) {
+				BH.remove(i);
 			}
 		}
 	}
@@ -113,7 +89,7 @@ public class ObjectManager {
 			} else if(bh.collisionBox.intersects(B.collisionBox)) {
 				B.isAlive=false;
 			}
-			
+		
 			/* else if (bh.collisionBox.intersects(teemo.collisionBox)) {
 				bh.isAlive = false;
 				B.isAlive=false;

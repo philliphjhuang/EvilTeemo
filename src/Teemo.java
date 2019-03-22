@@ -24,7 +24,7 @@ public class Teemo extends GameObject {
 	}
 
 	void draw(Graphics g) {
-		g.drawImage(GamePanel.teemoImg, x, y-125, width, height, null);
+		g.drawImage(GamePanel.teemoImg, x, y, width, height, null);
 	}
 
 }

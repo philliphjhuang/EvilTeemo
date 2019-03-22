@@ -7,8 +7,8 @@ public class Thresh extends GameObject {
 	public Thresh(int x, int y, int width, int height) {
 		super(x,y,width,height);
 		// TODO Auto-generated constructor stub
-		Xspeed = 6;
-		Yspeed = 6;
+		Xspeed = 4;
+		Yspeed = 4;
 	}
 	void update() {
 	super.update();
@@ -19,18 +19,18 @@ public class Thresh extends GameObject {
 		Xspeed=-Xspeed;
 	} 
 	if(x==0) {
-		Xspeed=6;
+		Xspeed=4;
 	}
-	if(y>300) {
+	if(y>250) {
 		Yspeed=-Yspeed;
 	}
 	if(y==10) {
-		Yspeed=6;
+		Yspeed=4;
 	}
 	
 	
 	}
 	void draw(Graphics g) {
-		g.drawImage(GamePanel.threshImg,x-70,y-100,width,height,null);
+		g.drawImage(GamePanel.threshImg,x,y,width,height,null);
 	}
 }

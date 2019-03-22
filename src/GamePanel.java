@@ -10,6 +10,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Random;
 
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
@@ -35,8 +36,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 	Blitzcrank B = new Blitzcrank(750, 800, 150, 150);
 
 	Thresh T = new Thresh(750, 100, 150, 150);
-
-	Teemo teemo = new Teemo(0, 450, 200, 200);
+	
+	Teemo teemo = new Teemo(0,400, 200, 200);
 
 	ObjectManager OM = new ObjectManager(B, T, teemo);
 
@@ -58,7 +59,6 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 
 	void updateGameState() {
 		OM.update();
-		OM.manageEnemies();
 		OM.checkCollision();
 		OM.purgeObjects();
 		if (B.isAlive == false) {
@@ -109,7 +109,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 
 		g.setFont(smallFont);
 
-		g.drawString("You got " + OM.getScore() + " point(s)", 138, 350);
+		g.drawString("You got " + OM.getScore() + " point(s) and survived for " + OM.currentTime + " seconds.", 138, 350);
 
 		g.drawString("Press ENTER to rerstart", 110, 500);
 
@@ -164,7 +164,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 		} else if (currentState == GAME_STATE) {
 
 			updateGameState();
-
+			
 		} else if (currentState == END_STATE) {
 
 			updateEndState();
@@ -206,9 +206,15 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 			if (currentState == END_STATE) {
 				B = new Blitzcrank(750, 800, 150, 150);
 				T = new Thresh(750, 100, 150, 150);
-				teemo = new Teemo(0, 450, 200, 200);
+				teemo = new Teemo(0, 400, 200, 200);
 				OM = new ObjectManager(B, T, teemo);
+				
+				
 			}
+			
+		if(currentState == GAME_STATE) {
+			OM.startTime=System.currentTimeMillis();
+		}
 			System.out.println(WIDTH + " " + HEIGHT);
 			currentState++;
 		}
@@ -234,14 +240,17 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 		}
 		*/
 		if (e.getKeyCode()==KeyEvent.VK_SPACE &&currentState == MENU_STATE) {
-			JOptionPane.showMessageDialog(null, "Click to move around. Try not to get hit.");
+			JOptionPane.showMessageDialog(null, "Click to move around and dodge.");
 		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-
+		if(e.getKeyCode()==KeyEvent.VK_ENTER) {
+			OM.addBlitzcrankHook(new BlitzcrankHook(teemo.x,teemo.y,100,100));
+			
+		}
 	}
 
 	@Override
