@@ -81,15 +81,9 @@ public class ObjectManager {
 
 	void checkCollision() {
 		for (BlitzcrankHook bh : BH) {
-			if (bh.collisionBox.intersects(T.collisionBox)) {
-				score++;
-				bh.isAlive = false;
-				T.isAlive = false;
-				
-			} else if(bh.collisionBox.intersects(B.collisionBox)) {
+			if(bh.collisionBox.intersects(B.collisionBox)) {
 				B.isAlive=false;
 			}
-		
 			/* else if (bh.collisionBox.intersects(teemo.collisionBox)) {
 				bh.isAlive = false;
 				B.isAlive=false;

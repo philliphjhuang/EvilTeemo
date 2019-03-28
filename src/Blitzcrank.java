@@ -20,16 +20,16 @@ public class Blitzcrank extends GameObject{
 	super.update();
 
 	
-	if (x < mouseX) {
+	if (x + (width/2) < mouseX) {
 		x += speed;
 	}
-	if(x > mouseX) {
+	if(x + (width/2) > mouseX) {
 		x -= speed;
 	}
-	if(y < mouseY) {
+	if(y + (height/2) < mouseY) {
 		y += speed;
 	}
-	if(y > mouseY) {
+	if(y + (height/2) > mouseY) {
 		y -= speed;
 	}
 	
@@ -38,6 +38,8 @@ public class Blitzcrank extends GameObject{
 	
 	}
 	void draw(Graphics g) {
-		g.drawImage(GamePanel.blitzcrankImg,x-70,y-100,width,height,null);
+		g.drawImage(GamePanel.blitzcrankImg,x,y,width,height,null);
+		g.setColor(Color.RED);
+		g.drawRect(collisionBox.x, collisionBox.y, collisionBox.width,collisionBox.height );
 	}
 }

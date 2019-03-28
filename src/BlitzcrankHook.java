@@ -44,6 +44,7 @@ public class BlitzcrankHook extends GameObject {
 	void draw(Graphics g) {
 
 		g.drawImage(GamePanel.dartImg, x, y, width, height, null);
-
+		g.setColor(Color.RED);
+		g.drawRect(collisionBox.x, collisionBox.y, collisionBox.width,collisionBox.height );
 	}
 }

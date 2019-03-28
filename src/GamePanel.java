@@ -36,14 +36,16 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 	Blitzcrank B = new Blitzcrank(750, 800, 150, 150);
 
 	Thresh T = new Thresh(750, 100, 150, 150);
-	
-	Teemo teemo = new Teemo(0,400, 200, 200);
+
+	Teemo teemo = new Teemo(0, 400, 200, 200);
 
 	ObjectManager OM = new ObjectManager(B, T, teemo);
 
 	int mouseX;
 
 	int mouseY;
+
+	long timer1 = System.currentTimeMillis() - OM.startTime;
 
 	boolean canHook;
 
@@ -53,6 +55,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 	public static BufferedImage threshHookImg;
 	public static BufferedImage teemoImg;
 	public static BufferedImage mapImg;
+
 	void updateMenuState() {
 
 	}
@@ -63,6 +66,11 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 		OM.purgeObjects();
 		if (B.isAlive == false) {
 			currentState = END_STATE;
+		}
+		if (System.currentTimeMillis() - OM.startTime > 1000) {
+			timer1++;
+			OM.startTime = System.currentTimeMillis();
+
 		}
 	}
 
@@ -109,7 +117,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 
 		g.setFont(smallFont);
 
-		g.drawString("You got " + OM.getScore() + " point(s) and survived for " + OM.currentTime + " seconds.", 138, 350);
+		g.drawString("You survived for " + timer1 + " seconds.", 138, 350);
 
 		g.drawString("Press ENTER to rerstart", 110, 500);
 
@@ -133,11 +141,11 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 			threshImg = ImageIO.read(this.getClass().getResourceAsStream("thresh.png"));
 
 			threshHookImg = ImageIO.read(this.getClass().getResourceAsStream("threshHook.png"));
-			
+
 			teemoImg = ImageIO.read(this.getClass().getResourceAsStream("teemo.png"));
-			
+
 			mapImg = ImageIO.read(this.getClass().getResourceAsStream("map.png"));
-			
+
 		} catch (IOException e) {
 
 			// TODO Auto-generated catch block
@@ -164,7 +172,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 		} else if (currentState == GAME_STATE) {
 
 			updateGameState();
-			
+
 		} else if (currentState == END_STATE) {
 
 			updateEndState();
@@ -208,38 +216,31 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 				T = new Thresh(750, 100, 150, 150);
 				teemo = new Teemo(0, 400, 200, 200);
 				OM = new ObjectManager(B, T, teemo);
-				
-				
+
 			}
-			
-		if(currentState == GAME_STATE) {
-			OM.startTime=System.currentTimeMillis();
-		}
+
+			if (currentState == GAME_STATE) {
+				OM.startTime = System.currentTimeMillis();
+			}
 			System.out.println(WIDTH + " " + HEIGHT);
 			currentState++;
+			OM.addBlitzcrankHook(new BlitzcrankHook(teemo.x, teemo.y, 100, 100));
 		}
 		if (currentState > END_STATE) {
-
 			currentState = MENU_STATE;
 		}
-		
+
 		/*
-		if ((e.getKeyCode() == KeyEvent.VK_Q) && (B.canHook==true)) {
-			if (currentState == GAME_STATE) {
-				OM.addBlitzcrankHook(new BlitzcrankHook(B.x - 70, B.y - 100, 100, 100, mouseX, mouseY));
-				
-				
-				B.canHook=false;
-				
-				if(B.isLaunching==true) {
-				B.speed=0;
-				} else {
-					B.speed = 3;
-				}
-			}
-		}
-		*/
-		if (e.getKeyCode()==KeyEvent.VK_SPACE &&currentState == MENU_STATE) {
+		 * if ((e.getKeyCode() == KeyEvent.VK_Q) && (B.canHook==true)) { if
+		 * (currentState == GAME_STATE) { OM.addBlitzcrankHook(new BlitzcrankHook(B.x -
+		 * 70, B.y - 100, 100, 100, mouseX, mouseY));
+		 * 
+		 * 
+		 * B.canHook=false;
+		 * 
+		 * if(B.isLaunching==true) { B.speed=0; } else { B.speed = 3; } } }
+		 */
+		if (e.getKeyCode() == KeyEvent.VK_SPACE && currentState == MENU_STATE) {
 			JOptionPane.showMessageDialog(null, "Click to move around and dodge.");
 		}
 	}
@@ -247,16 +248,15 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-		if(e.getKeyCode()==KeyEvent.VK_ENTER) {
-			OM.addBlitzcrankHook(new BlitzcrankHook(teemo.x,teemo.y,100,100));
-			
+		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+			OM.addBlitzcrankHook(new BlitzcrankHook(750, teemo.y, 100, 100));
 		}
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
-		OM.addBlitzcrankHook(new BlitzcrankHook(teemo.x,teemo.y,100,100));
+		OM.addBlitzcrankHook(new BlitzcrankHook(teemo.x, teemo.y, 100, 100));
 	}
 
 	@Override
@@ -264,16 +264,14 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 		// TODO Auto-generated method stub
 		System.out.println("x: " + e.getX());
 		System.out.println("y: " + e.getY());
-		
+
 		B.mousePosition(e.getX(), e.getY());
-		
-		
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
-
+		OM.addBlitzcrankHook(new BlitzcrankHook(teemo.x, teemo.y, 100, 100));
 	}
 
 	@Override
