@@ -52,7 +52,7 @@ public class ObjectManager {
 	}
 
 	public void manageHook() {
-		if (System.currentTimeMillis() - timer >= 2000) {
+		if (System.currentTimeMillis()%100==0) {
 			timer = System.currentTimeMillis();
 			addBlitzcrankHook(new BlitzcrankHook(teemo.x,teemo.y,100,100));
 		}

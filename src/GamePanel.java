@@ -70,7 +70,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 		if (System.currentTimeMillis() - OM.startTime > 1000) {
 			timer1++;
 			OM.startTime = System.currentTimeMillis();
-
+			OM.addBlitzcrankHook(new BlitzcrankHook(teemo.x, teemo.y, 100, 100));
 		}
 	}
 
@@ -221,6 +221,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 
 			if (currentState == GAME_STATE) {
 				OM.startTime = System.currentTimeMillis();
+				if(OM.startTime%2==0) {
+					OM.addBlitzcrankHook(new BlitzcrankHook(teemo.x, teemo.y, 100, 100));
+				}
 			}
 			System.out.println(WIDTH + " " + HEIGHT);
 			currentState++;
@@ -228,7 +231,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 		}
 		if (currentState > END_STATE) {
 			currentState = MENU_STATE;
-			timer1=1;
+			timer1=0;
 		}
 
 		/*
@@ -242,23 +245,25 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 		 * if(B.isLaunching==true) { B.speed=0; } else { B.speed = 3; } } }
 		 */
 		if (e.getKeyCode() == KeyEvent.VK_SPACE && currentState == MENU_STATE) {
-			JOptionPane.showMessageDialog(null, "Click to move around and dodge.");
+			JOptionPane.showMessageDialog(null, "You are the yellow robot. Click to move around and dodge the mushrooms the hamster planted. Try to survive as long as you can");
 		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-			OM.addBlitzcrankHook(new BlitzcrankHook(750, teemo.y, 100, 100));
-			
+		if (e.getKeyCode() == KeyEvent.VK_ENTER&&currentState==GAME_STATE) {
+			OM.addBlitzcrankHook(new BlitzcrankHook(750, teemo.y-150, 100, 100));
+			OM.addBlitzcrankHook(new BlitzcrankHook(1090, teemo.y-150, 100, 100));
+			OM.addBlitzcrankHook(new BlitzcrankHook(941, teemo.y-150, 100, 100));
+			OM.addBlitzcrankHook(new BlitzcrankHook(659, teemo.y-150, 100, 100));
 		}
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
-		OM.addBlitzcrankHook(new BlitzcrankHook(teemo.x, teemo.y, 100, 100));
+		
 	}
 
 	@Override
@@ -273,7 +278,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
-		OM.addBlitzcrankHook(new BlitzcrankHook(teemo.x, teemo.y, 100, 100));
+
 	}
 
 	@Override
