@@ -228,6 +228,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 		}
 		if (currentState > END_STATE) {
 			currentState = MENU_STATE;
+			timer1=1;
 		}
 
 		/*
@@ -250,6 +251,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 		// TODO Auto-generated method stub
 		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 			OM.addBlitzcrankHook(new BlitzcrankHook(750, teemo.y, 100, 100));
+			
 		}
 	}
 
