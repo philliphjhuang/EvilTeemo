@@ -2,10 +2,10 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.Random;
 
-public class BlitzcrankHook extends GameObject {
+public class Mushroom extends GameObject {
 	int Xspeed;
 	int Yspeed;
-	public BlitzcrankHook(int x, int y, int width, int height) {
+	public Mushroom(int x, int y, int width, int height) {
 		super(x, y, width, height);
 		Xspeed = 10;
 		Yspeed = 10;
@@ -43,7 +43,7 @@ public class BlitzcrankHook extends GameObject {
 
 	void draw(Graphics g) {
 
-		g.drawImage(GamePanel.dartImg, x, y, width, height, null);
+		g.drawImage(GamePanel.mushroomImg, x, y, width, height, null);
 		g.setColor(Color.RED);
 		g.drawRect(collisionBox.x, collisionBox.y, collisionBox.width,collisionBox.height );
 	}

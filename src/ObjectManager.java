@@ -6,9 +6,8 @@ public class ObjectManager {
 	Blitzcrank B;
 	Thresh T;
 	Teemo teemo;
-	ArrayList<BlitzcrankHook> BH = new ArrayList<BlitzcrankHook>();
+	ArrayList<Mushroom> M = new ArrayList<Mushroom>();
 	ArrayList<Thresh> thresh = new ArrayList<Thresh>();
-	ArrayList<ThreshHook> TH = new ArrayList<ThreshHook>();
 	long startTime = System.currentTimeMillis();
 	long currentTime = (System.currentTimeMillis()-startTime)/1000;
 	long timer = 0L;
@@ -24,8 +23,8 @@ public class ObjectManager {
 		B.update();
 		T.update();
 		teemo.update();
-		for (BlitzcrankHook bh : BH) {
-			bh.update();
+		for (Mushroom m : M) {
+			m.update();
 		}
 		for (Thresh T : thresh) {
 			T.update();
@@ -36,16 +35,16 @@ public class ObjectManager {
 		B.draw(g);
 		T.draw(g);
 		teemo.draw(g);
-		for (BlitzcrankHook bh : BH) {
-			bh.draw(g);
+		for (Mushroom m : M) {
+			m.draw(g);
 		}
 		for (Thresh th : thresh) {
 			th.draw(g);
 		}
 	}
 
-	void addBlitzcrankHook(BlitzcrankHook blitzcrankHookObjects) {
-		BH.add(blitzcrankHookObjects);
+	void addMushroom(Mushroom mushroomObjects) {
+		M.add(mushroomObjects);
 	}
 	void addThresh(Thresh ThreshObjects) {
 		thresh.add(ThreshObjects);
@@ -54,13 +53,13 @@ public class ObjectManager {
 	public void manageHook() {
 		if (System.currentTimeMillis()%100==0) {
 			timer = System.currentTimeMillis();
-			addBlitzcrankHook(new BlitzcrankHook(teemo.x,teemo.y,100,100));
+			addMushroom(new Mushroom(teemo.x,teemo.y,100,100));
 		}
 	}
 	void purgeObjects() {
-		for (int i = 0; i < BH.size(); i++) {
-			if (BH.get(i).isAlive == false) {
-				BH.remove(i);
+		for (int i = 0; i < M.size(); i++) {
+			if (M.get(i).isAlive == false) {
+				M.remove(i);
 			}
 		}
 	}
@@ -80,8 +79,8 @@ public class ObjectManager {
 	}
 
 	void checkCollision() {
-		for (BlitzcrankHook bh : BH) {
-			if(bh.collisionBox.intersects(B.collisionBox)) {
+		for (Mushroom m: M) {
+			if(m.collisionBox.intersects(B.collisionBox)) {
 				B.isAlive=false;
 				
 			}

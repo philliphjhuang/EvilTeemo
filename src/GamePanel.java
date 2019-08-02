@@ -50,7 +50,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 	boolean canHook;
 
 	public static BufferedImage blitzcrankImg;
-	public static BufferedImage dartImg;
+	public static BufferedImage mushroomImg;
 	public static BufferedImage threshImg;
 	public static BufferedImage threshHookImg;
 	public static BufferedImage teemoImg;
@@ -70,7 +70,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 		if (System.currentTimeMillis() - OM.startTime > 1000) {
 			timer1++;
 			OM.startTime = System.currentTimeMillis();
-			OM.addBlitzcrankHook(new BlitzcrankHook(teemo.x, teemo.y, 100, 100));
+			OM.addMushroom(new Mushroom(teemo.x, teemo.y, 100, 100));
 		}
 	}
 
@@ -136,11 +136,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 
 			blitzcrankImg = ImageIO.read(this.getClass().getResourceAsStream("blitzcrank.png"));
 
-			dartImg = ImageIO.read(this.getClass().getResourceAsStream("dart.png"));
+			mushroomImg = ImageIO.read(this.getClass().getResourceAsStream("dart.png"));
 
 			threshImg = ImageIO.read(this.getClass().getResourceAsStream("thresh.png"));
-
-			threshHookImg = ImageIO.read(this.getClass().getResourceAsStream("threshHook.png"));
 
 			teemoImg = ImageIO.read(this.getClass().getResourceAsStream("teemo.png"));
 
@@ -222,12 +220,12 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 			if (currentState == GAME_STATE) {
 				OM.startTime = System.currentTimeMillis();
 				if(OM.startTime%2==0) {
-					OM.addBlitzcrankHook(new BlitzcrankHook(teemo.x, teemo.y, 100, 100));
+					OM.addMushroom(new Mushroom(teemo.x, teemo.y, 100, 100));
 				}
 			}
 			System.out.println(WIDTH + " " + HEIGHT);
 			currentState++;
-			OM.addBlitzcrankHook(new BlitzcrankHook(teemo.x, teemo.y, 100, 100));
+			OM.addMushroom(new Mushroom(teemo.x, teemo.y, 100, 100));
 		}
 		if (currentState > END_STATE) {
 			currentState = MENU_STATE;
@@ -253,10 +251,10 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
 		if (e.getKeyCode() == KeyEvent.VK_ENTER&&currentState==GAME_STATE) {
-			OM.addBlitzcrankHook(new BlitzcrankHook(750, teemo.y-150, 100, 100));
-			OM.addBlitzcrankHook(new BlitzcrankHook(1090, teemo.y-150, 100, 100));
-			OM.addBlitzcrankHook(new BlitzcrankHook(941, teemo.y-150, 100, 100));
-			OM.addBlitzcrankHook(new BlitzcrankHook(659, teemo.y-150, 100, 100));
+			OM.addMushroom(new Mushroom(750, teemo.y-150, 100, 100));
+			OM.addMushroom(new Mushroom(1090, teemo.y-150, 100, 100));
+			OM.addMushroom(new Mushroom(941, teemo.y-150, 100, 100));
+			OM.addMushroom(new Mushroom(659, teemo.y-150, 100, 100));
 		}
 	}
 
