@@ -87,7 +87,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 
 		g.setFont(titleFont);
 
-		g.drawString("Hook Battle", 25, 200);
+		g.drawString("Evil Teemo", 25, 200);
 
 		g.setFont(smallFont);
 
