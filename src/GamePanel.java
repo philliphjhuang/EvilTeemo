@@ -119,7 +119,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 
 		g.drawString("You survived for " + timer1 + " seconds.", 138, 350);
 
-		g.drawString("Press ENTER to rerstart", 110, 500);
+		g.drawString("Press ENTER to restart", 110, 500);
 
 	}
 
@@ -271,6 +271,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 		System.out.println("y: " + e.getY());
 
 		B.mousePosition(e.getX(), e.getY());
+		
+		B.speed=4;
+		
 	}
 
 	@Override

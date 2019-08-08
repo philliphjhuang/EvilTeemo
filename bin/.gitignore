@@ -1,13 +1,12 @@
 /.DS_Store
 /Blitzcrank.class
-/BlitzcrankHook.class
 /GameObject.class
 /GamePanel.class
 /HookBattle.class
+/Mushroom.class
 /ObjectManager.class
 /Teemo.class
 /Thresh.class
-/ThreshHook.class
 /blitzcrank.png
 /blitzcrankHook.png
 /dart.png
@@ -15,4 +14,3 @@
 /teemo.png
 /thresh.png
 /threshHook.png
-/Mushroom.class
