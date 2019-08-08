@@ -43,7 +43,7 @@ public class Mushroom extends GameObject {
 
 	void draw(Graphics g) {
 		g.drawImage(GamePanel.mushroomImg, x, y, width, height, null);
-		g.setColor(new Color(255,156,89,195));
+		g.setColor(new Color(0,0,0,0));
 		g.drawRect(collisionBox.x+5, collisionBox.y, collisionBox.width-10,collisionBox.height-5);
 	}
 }
